@@ -17,6 +17,10 @@
 export default {
   // props:['name', 'phoneNumber', 'emailAddress', 'isFavourite'],
   props: {
+    id: {
+      type: String,
+      require: true,
+    },
     name: {
       type: String,
       require: true,
@@ -37,19 +41,15 @@ export default {
   data() {
     return {
       detailsVisible: false,
-      friend: {
-        id: "Nabeel",
-        name: "Nabeel Anwar",
-        phone: "090 0786 01",
-        email: "nabeel@gmail.com",
-      },
     };
   },
   methods: {
     toggleDetails() {
       this.detailsVisible = !this.detailsVisible;
     },
-    toggleFavourite() {},
+    toggleFavourite() {
+      this.$emit("favourite-toggled", this.id);
+    },
   },
 };
 </script>
