@@ -2,7 +2,14 @@
   <section>
     <header><h1>My Friends</h1></header>
     <ul>
-      <friend-contact></friend-contact>
+      <friend-contact
+        v-for="friend in friends"
+        :key="friend.id"
+        :name="friend.name"
+        :phone-number="friend.phone"
+        :email-address="friend.email"
+        :is-favourite="friend.isFavourite"
+      ></friend-contact>
     </ul>
   </section>
 </template>
@@ -13,14 +20,25 @@ export default {
     return {
       friends: [
         {
+          id: "nabeel",
           name: "Nabeel Anwar",
           phone: "090 0786 01",
           email: "nabeel@gmail.com",
+          isFavourite: true,
         },
         {
+          id: "aziz",
           name: "Syed Abdul Aziz",
           phone: "090 0346 21",
           email: "aziz@gmail.com",
+          isFavourite: false,
+        },
+        {
+          id: "ammar",
+          name: "M Ammar",
+          phone: "090 0346 21",
+          email: "ammar@gmail.com",
+          isFavourite: false,
         },
       ],
     };
