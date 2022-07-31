@@ -20,10 +20,12 @@
     <button @click="toggleComponent('active-goal')">Active Goal</button>
     <button @click="toggleComponent('manage-goal')">Manage Goal</button>
     <!-- Dynamic component -->
-    <!-- <active-goal v-if="selectedComponent === 'active-goal'"></active-goal>
+    <!-- 
+    <active-goal v-if="selectedComponent === 'active-goal'"></active-goal>
     <manage-goal v-if="selectedComponent === 'manage-goal'"></manage-goal> -->
-
-    <component :is="selectedComponent"></component>
+    <keep-alive>
+      <component :is="selectedComponent"></component>
+    </keep-alive>
     <h1>Dynamic Component Switching</h1>
     <br />
   </div>
