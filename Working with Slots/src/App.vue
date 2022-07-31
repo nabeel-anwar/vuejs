@@ -16,6 +16,16 @@
         <strong>{{ slotProps.status }}</strong>
       </template>-->
     </course-goal>
+    <br /><br />
+    <button @click="toggleComponent('active-goal')">Active Goal</button>
+    <button @click="toggleComponent('manage-goal')">Manage Goal</button>
+    <!-- Dynamic component -->
+    <!-- <active-goal v-if="selectedComponent === 'active-goal'"></active-goal>
+    <manage-goal v-if="selectedComponent === 'manage-goal'"></manage-goal> -->
+
+    <component :is="selectedComponent"></component>
+    <h1>Dynamic Component Switching</h1>
+    <br />
   </div>
 </template>
 
@@ -24,21 +34,31 @@ import TheHeader from "./components/TheHeader.vue";
 import BadgeList from "./components/BadgeList.vue";
 import UserInfo from "./components/UserInfo.vue";
 import CourseGoal from "./components/CourseGoal.vue";
+import ActiveGoal from "./components/ActiveGoal.vue";
+import ManageGoal from "./components/ManageGoal.vue";
 export default {
   components: {
     TheHeader,
     BadgeList,
     UserInfo,
     CourseGoal,
+    ActiveGoal,
+    ManageGoal,
   },
   data() {
     return {
+      selectedComponent: null,
       activeUser: {
         name: "Maximilian Schwarzmüller",
         description: "Site owner and admin",
         role: "admin",
       },
     };
+  },
+  methods: {
+    toggleComponent(cmp) {
+      this.selectedComponent = cmp;
+    },
   },
 };
 </script>
