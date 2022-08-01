@@ -16,11 +16,11 @@ export default {
   components: {
     LearningResource,
   },
-  props: ['resources'],
+  inject: ['resources'],
 };
 </script>
 
-<style>
+<style scoped>
 ul {
   list-style: none;
   margin: 0;
