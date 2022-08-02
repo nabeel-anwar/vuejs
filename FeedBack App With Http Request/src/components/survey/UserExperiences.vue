@@ -7,7 +7,12 @@
           >Load Submitted Experiences</base-button
         >
       </div>
-      <ul>
+      <p v-if="isLoading">Loading...</p>
+      <p v-else-if="!isLoading && error">{{ error }}</p>
+      <p v-else-if="!isLoading && (!results || results.length === 0)">
+        No surveys found! Please fill atleast one survey.
+      </p>
+      <ul v-else>
         <survey-result
           v-for="result in results"
           :key="result.id"
@@ -29,10 +34,14 @@ export default {
   data() {
     return {
       results: [],
+      isLoading: false,
+      error: null,
     };
   },
   methods: {
     loadExperiences() {
+      this.isLoading = true;
+      this.error = null;
       fetch(
         `https://vue-http-demo-4b82e-default-rtdb.firebaseio.com/surveys.json`
       )
@@ -40,6 +49,7 @@ export default {
           if (response.ok) return response.json();
         })
         .then((data) => {
+          this.isLoading = false;
           const results = [];
           for (const id in data) {
             results.push({
@@ -49,8 +59,16 @@ export default {
             });
           }
           this.results = results;
+        })
+        .catch((error) => {
+          console.log(error);
+          this.isLoading = false;
+          this.error = 'Something went wrong! Please Try Again later';
         });
     },
+  },
+  mounted() {
+    this.loadExperiences();
   },
 };
 </script>
