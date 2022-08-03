@@ -3,7 +3,9 @@ import { createRouter, createWebHistory } from 'vue-router';
 
 import TeamsList from './components/teams/TeamsList.vue';
 import UsersList from './components/users/UsersList.vue';
+import UsersFooter from './components/users/UsersFooter.vue';
 import TeamMembers from './components/teams/TeamMembers.vue';
+import TeamFooter from './components/teams/TeamFooter.vue';
 import NotFound from './components/NotFound.vue';
 import App from './App.vue';
 
@@ -14,7 +16,7 @@ const router = createRouter({
     {
       name: 'teams',
       path: '/teams',
-      component: TeamsList,
+      components: { default: TeamsList, footer: TeamFooter },
       children: [
         {
           name: 'team-members',
@@ -24,10 +26,18 @@ const router = createRouter({
         }, // /teams/t1
       ],
     }, // our-domain.com/teams => TeamsList
-    { path: '/users', component: UsersList },
+    { path: '/users', components: { default: UsersList, footer: UsersFooter } },
 
     { path: '/:notFound(.*)', component: NotFound },
   ],
+  linkActiveClass: 'active',
+  scrollBehavior(to, from, savePosition) {
+    console.log(to, from, savePosition); // position is saved when coming back
+    if (savePosition) {
+      return savePosition;
+    }
+    return { top: 0, left: 0 };
+  },
   // routes: [
   //   // { component: TeamsList }, // default route
 
@@ -44,7 +54,6 @@ const router = createRouter({
   //   // { path: '/:notFound(.*)', redirect: '/teams' },
   //   { path: '/:notFound(.*)', component: NotFound },
   // ],
-  linkActiveClass: 'active',
 });
 
 const app = createApp(App);

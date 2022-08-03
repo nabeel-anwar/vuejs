@@ -21,7 +21,7 @@ export default {
     UserItem,
   },
   inject: ['teams', 'users'],
-  props: ['teamId'],
+  props: ['teamId'], // Use this instead of $routes.params
   data() {
     return {
       teamName: '',
