@@ -11,7 +11,7 @@ export default {
     //   // this.$store.commit('increment');
     //   // this.$store.dispatch('increment'); //Run methods in actions
     // },
-    ...mapActions(['increment', 'increase']),
+    ...mapActions('counterModule', ['increment', 'increase']),
   },
 };
 </script>

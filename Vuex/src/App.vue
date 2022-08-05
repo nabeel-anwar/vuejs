@@ -5,7 +5,7 @@
     <button @click="increase({ value: 10 })">Add 10</button>
     <change-counter></change-counter>
   </base-container>
-  <base-container>
+  <base-container title="Auth">
     <user-auth></user-auth>
   </base-container>
 </template>
@@ -34,7 +34,7 @@ export default {
     //     type: 'increase',
     //     value: 10,
     //   });
-    ...mapActions(['increase']),
+    ...mapActions('counterModule', ['increase']),
   },
   computed: {
     isAuth() {

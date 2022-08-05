@@ -10,7 +10,7 @@ export default {
     // counter() {
     //   return this.$store.getters.normalizedCounter;
     // },
-    ...mapGetters(['finalCounter']),
+    ...mapGetters('counterModule', ['finalCounter']),
   },
 };
 </script>
