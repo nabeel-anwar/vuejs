@@ -9,7 +9,7 @@
         :role="member.role"
       ></user-item>
     </ul>
-    <router-link to="/teams/t2">Go to team 2</router-link>
+    <router-link to="/teams/t2">Go to Team 2</router-link>
   </section>
 </template>
 
@@ -17,11 +17,11 @@
 import UserItem from '../users/UserItem.vue';
 
 export default {
+  inject: ['users', 'teams'],
+  props: ['teamId'],
   components: {
     UserItem,
   },
-  inject: ['teams', 'users'],
-  props: ['teamId'], // Use this instead of $routes.params
   data() {
     return {
       teamName: '',
@@ -29,25 +29,32 @@ export default {
     };
   },
   methods: {
-    loadTeamData(teamId) {
-      const team = this.teams.find((team) => team.id === teamId);
-      const members = team.members;
+    loadTeamMembers(teamId) {
+      const selectedTeam = this.teams.find((team) => team.id === teamId);
+      const members = selectedTeam.members;
       const selectedMembers = [];
       for (const member of members) {
-        const user = this.users.find((user) => user.id === member);
-        console.log(user);
-        selectedMembers.push(user);
+        const selectedUser = this.users.find((user) => user.id === member);
+        selectedMembers.push(selectedUser);
       }
-      this.teamName = team.name;
       this.members = selectedMembers;
+      this.teamName = selectedTeam.name;
     },
   },
   created() {
-    this.loadTeamData(this.teamId);
+    // this.$route.path // /teams/t1
+    this.loadTeamMembers(this.teamId);
+    console.log(this.$route.query);
+  },
+  beforeRouteUpdate(to, from, next) {
+    console.log('TeamMembers Cmp beforeRouteUpdate');
+    console.log(to, from);
+    // this.loadTeamMembers(to.params.teamId);
+    next();
   },
   watch: {
     teamId(newId) {
-      this.loadTeamData(newId);
+      this.loadTeamMembers(newId);
     },
   },
 };
